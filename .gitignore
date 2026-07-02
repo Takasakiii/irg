@@ -8,3 +8,4 @@ subprojects/**/.meson-subprojects-wrap-hash.txt
 
 compile_commands.json
 .envrc
+.zed

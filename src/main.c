@@ -1,58 +1,59 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "isometric.h"
+#include "camera.h"
+#include "world.h"
 
-#define ENABLE_RANDOM 1
-
-typedef bool Block;
 
 int main(void) {
     const int width = 720;
     const int height = 480;
 
-    const int gridW = 10;
-    const int gridH = 10;
+    const Vector2 worldSize = { 100, 100 };
 
     InitWindow(width, height, "IRG");
 
-    Block world[gridH][gridW];
+    Block* world = malloc((sizeof(Block) * (int) worldSize.x) * (int)worldSize.y);
 
     const Vector3 blockSize = { 64.0, 32.0, 40.0 };
 
-    const Camera2D camera = {
-        (Vector2) { width / 2.0, height / 2.0 }, // offset
-        cartesianToIso(&(Vector2) { gridW / 2.0, gridH / 2.0 }, &blockSize), // target
-        0.0, // rotation
-        1.0 // zoom
-    };
+    Camera2D camera = cameraSetup((CameraOptions) {
+        &(Vector2) { width, height }, //screenSize
+        &worldSize,
+        &blockSize
+    });
 
-#if defined (ENABLE_RANDOM) && (ENABLE_RANDOM != 1)
-    for(int row = 0; row < gridH; row++) {
-        for (int col = 0; col < gridW; col++) {
-            world[row][col] = true;
+    srand(time(NULL));
+    for(int row = 0; row < (int) worldSize.y; row++) {
+        for (int col = 0; col < (int) worldSize.x; col++) {
+            world[(int)(worldSize.x * row + col)] = rand() % 2;
         }
     }
-#endif
 
     while (!WindowShouldClose()) {
+        handlePlayerCameraControls(&camera);
         BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode2D(camera);
-                for(int row = 0; row < gridH; row++) {
-                    for (int col = 0; col < gridW; col++) {
-                        if(world[row][col]) {
-                            const Vector2 isoPos = cartesianToIso(&(Vector2) {col, row}, &blockSize);
-                            drawIsoCube(&isoPos, &blockSize);
+                for(int row = 0; row < (int) worldSize.y; row++) {
+                    for (int col = 0; col < (int) worldSize.x; col++) {
+                        if(world[(int)(worldSize.x * row + col)]) {
+                            const Vector2 blockPos = {col, row};
+                            const bool isMouseHover = isomentricIsMouseHover(camera, &blockPos, &blockSize);
+                            drawIsoCube(&blockPos, &blockSize, false, isMouseHover);
                         }
                     }
                 }
-                DrawCircleV(camera.target, 5, RED);
+                // DrawText(TextFormat("FPS: %d", GetFPS()), 0, 0, 24, BLACK);
             EndMode2D();
         EndDrawing();
     }
 
     CloseWindow();
+    free(world);
     return 0;
 }

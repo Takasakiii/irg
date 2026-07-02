@@ -6,8 +6,7 @@ project(
     default_options: ['warning_level=3', 'buildtype=debugoptimized'],
 )
 
-
-srcfiles = ['src/main.c', 'src/isometric.c']
+srcfiles = ['src/main.c', 'src/isometric.c', 'src/camera.c']
 
 cmake = import('cmake')
 raylibsub = cmake.subproject('raylib')
@@ -21,8 +20,6 @@ dependencies = [lc, raylibdep]
 executable(
     'irg',
     sources: srcfiles,
-    include_directories: [
-        './includes'
-    ],
+    include_directories: ['./includes'],
     dependencies: dependencies,
 )
