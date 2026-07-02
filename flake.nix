@@ -12,6 +12,10 @@
       system:
       let
         pkgs = import nixpkgs { inherit system; };
+        pkgsMusl = import nixpkgs {
+          localSystem = system;
+          crossSystem = pkgs.lib.systems.examples.musl64;
+        };
       in
       {
         devShells.default = pkgs.mkShell {
@@ -32,6 +36,28 @@
             libGL
           ];
 
+        };
+
+        devShells.musl = pkgsMusl.mkShell {
+          nativeBuildInputs = with pkgsMusl; [
+            meson
+            ninja
+            cmake
+            pkg-config
+          ];
+
+          buildInputs = with pkgsMusl; [
+            libx11
+            libxrandr
+            libxinerama
+            libxcursor
+            libxi
+            libGL
+            mesa
+          ];
+
+          LIBGL_DRIVERS_PATH = "${pkgsMusl.mesa}/lib/dri";
+          LD_LIBRARY_PATH = "${pkgsMusl.mesa}/lib";
         };
       }
     );
