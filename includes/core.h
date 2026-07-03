@@ -1,5 +1,7 @@
 #pragma once
 
+#include <raylib.h>
+
 typedef struct {
     const int x;
     const int y;
@@ -15,3 +17,14 @@ typedef struct {
 typedef Coords2D Size2D;
 
 typedef Coords3D Size3D;
+
+typedef struct {
+    Camera2D* camera;
+    Size2D* screenSize;
+    Size3D* blockSize;
+    Size2D* gridSize;
+
+    int cameraLayer;
+} GameState;
+
+Vector2 rotatePoint(Vector2 p, const Vector2* pivot, const float deg);

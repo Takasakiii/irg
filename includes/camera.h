@@ -11,4 +11,4 @@ typedef struct {
 
 Camera2D cameraSetup(const CameraOptions cameraOptions);
 
-void handlePlayerCameraControls(Camera2D* camera);
+void handlePlayerCameraControls(GameState* gameState);

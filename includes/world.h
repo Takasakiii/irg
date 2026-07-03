@@ -34,6 +34,6 @@ typedef void (*RenderChunkCallback)(const Coords3D*, const Block*) ;
 
 Chunk generateChunk(void);
 
-void renderChunk(const Chunk* chunk, const RenderChunkCallback renderCallback);
+void renderChunk(const GameState* gameState, const Chunk* chunk, const RenderChunkCallback renderCallback);
 
 BlockColor getBlockColor(const Block* block);

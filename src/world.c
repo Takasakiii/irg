@@ -29,10 +29,10 @@ Chunk generateChunk(void) {
 }
 
 
-void renderChunk(const Chunk* chunk, const RenderChunkCallback renderCallback) {
-    for(int i = 0; i < CHUNK_SIZE_DEPTH; i++) {
-        for(int j = 0; j < CHUNK_SIZE; j++) {
-            for(int k = 0; k < CHUNK_SIZE; k++) {
+void renderChunk(const GameState* gameState, const Chunk* chunk, const RenderChunkCallback renderCallback) {
+    for(int i = 0; i < gameState->cameraLayer; i++) {
+        for(int j = 0; j < gameState->gridSize->y; j++) {
+            for(int k = 0; k < gameState->gridSize->x; k++) {
                 const Block* block = &chunk->blocks[i][j][k];
                 const Coords3D coords = { k, j, i };
                 renderCallback(&coords, block);

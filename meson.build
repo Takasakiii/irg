@@ -6,7 +6,14 @@ project(
     default_options: ['warning_level=3', 'buildtype=debugoptimized'],
 )
 
-srcfiles = ['src/main.c', 'src/isometric.c', 'src/camera.c', 'src/world.c']
+srcfiles = [
+    'src/main.c',
+    'src/isometric.c',
+    'src/camera.c',
+    'src/world.c',
+    'src/gui.c',
+    'src/core.c',
+]
 
 cmake = import('cmake')
 raylibsub = cmake.subproject('raylib')
