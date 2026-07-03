@@ -19,7 +19,8 @@ const Size3D blockSize = { 64, 32, 40 };
 static void renderWorld(const Coords3D* coords, const Block* block) {
     if(!*block) return;
     const bool isMouseHover = isomentricIsMouseHover(camera, coords, &blockSize);
-    drawIsoCube(coords, &blockSize, false, isMouseHover);
+    const bool isDebugKeyPressed = IsKeyDown(KEY_P);
+    drawIsoCube(coords, &blockSize, isDebugKeyPressed, isMouseHover);
 }
 
 int main(void) {

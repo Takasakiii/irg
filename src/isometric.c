@@ -47,7 +47,7 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, bool enableD
     }
 
     if(enableDebug) {
-        DrawText(TextFormat("(%d, %d)", (int)blockPos->x, (int)blockPos->y), isoPos.x, isoPos.y, 12, BLACK);
+        DrawText(TextFormat("(%d, %d, %d)", blockPos->x, blockPos->y, blockPos->z), isoPos.x, isoPos.y, 12, BLACK);
     }
 }
 
