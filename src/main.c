@@ -29,7 +29,7 @@ int main(void) {
 
     camera = cameraSetup((CameraOptions) {
         &(Size2D) { SCREEN_WIDTH, SCREEN_HEIGHT }, //screenSize
-        &(Size2D) {CHUNK_SIZE, CHUNK_SIZE },
+        &(Size2D) {CHUNK_SIZE, CHUNK_SIZE }, // gridSize
         &blockSize
     });
 
