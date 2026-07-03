@@ -23,7 +23,7 @@ void renderChunk(const Chunk* chunk, const RenderChunkCallback renderCallback) {
         for(int j = 0; j < CHUNK_SIZE; j++) {
             for(int k = 0; k < CHUNK_SIZE; k++) {
                 const Block* block = &chunk->blocks[i][j][k];
-                const Coords3D coords = { k, i, j };
+                const Coords3D coords = { k, j, i };
                 renderCallback(&coords, block);
             }
         }
