@@ -2,20 +2,17 @@
 
 #include <math.h>
 
-Vector2 cartesianToIso(const Vector2* catesian, const Vector3* blockSize) {
-    const float x = catesian->x;
-    const float y = catesian->y;
+Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize) {
+    Vector2 screenPos;
+    screenPos.x = (catesian->x - catesian->y) * (blockSize->x / 2.0);
+    screenPos.y = (catesian->x + catesian->y) * (blockSize->y / 2.0);
 
-    const float w = blockSize->x;
-    const float h = blockSize->y;
+    screenPos.y -= (catesian->z * blockSize->z);
 
-    return (Vector2) {
-        (x - y) * (w / 2.0),
-        (x + y) * (h / 2.0)
-    };
+    return screenPos;
 }
 
-void drawIsoCube(const Vector2* blockPos, const Vector3* blockSize, bool enableDebug, bool enableLines) {
+void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, bool enableDebug, bool enableLines) {
     const Color faceTopColor = LIGHTGRAY;
     const Color otherFacesColor = GRAY;
     const Color lineColor = BLACK;
@@ -54,15 +51,18 @@ void drawIsoCube(const Vector2* blockPos, const Vector3* blockSize, bool enableD
     }
 }
 
-bool isomentricIsMouseHover(const Camera2D camera, const Vector2* blockPos, const Vector3* blockSize) {
+bool isomentricIsMouseHover(const Camera2D camera, const Coords3D* blockPos, const Size3D* blockSize) {
     const Vector2 mouse = GetScreenToWorld2D(GetMousePosition(), camera);
     const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
 
-    const float dx = fabsf(mouse.x - isoPos.x);
-    const float dy = fabsf((float)(mouse.y - (isoPos.y + blockSize->y * 0.5)));
+    const float isoX = isoPos.x;
+    const float isoY = isoPos.y;
 
-    const float hw = blockSize->x * 0.5;
-    const float hh = blockSize->y * 0.5;
+    const float dx = fabsf(mouse.x - isoX);
+    const float dy = fabsf(mouse.y - (isoY + blockSize->y * 0.5f));
 
-    return dx / hw + dy / hh <= 1.0;
+    const float hw = blockSize->x * 0.5f;
+    const float hh = blockSize->y * 0.5f;
+
+    return (dx / hw + dy / hh) <= 1.0f;
 }

@@ -1,11 +1,12 @@
 #pragma once
 
 #include <raylib.h>
+#include "core.h"
 
 typedef struct {
-    const Vector2* screenSize;
-    const Vector2* gridSize;
-    const Vector3* blockSize;
+    const Size2D* screenSize;
+    const Size2D* gridSize;
+    const Size3D* blockSize;
 } CameraOptions;
 
 Camera2D cameraSetup(const CameraOptions cameraOptions);

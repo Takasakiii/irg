@@ -2,9 +2,10 @@
 
 #include <raylib.h>
 #include <stdbool.h>
+#include "core.h"
 
-Vector2 cartesianToIso(const Vector2* catesian, const Vector3* blockSize);
+Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize);
 
-void drawIsoCube(const Vector2* blockPos, const Vector3* blockSize, bool enableDebug, bool enableLines);
+void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, bool enableDebug, bool enableLines);
 
-bool isomentricIsMouseHover(const Camera2D camera, const Vector2* blockPos, const Vector3* blockSize);
+bool isomentricIsMouseHover(const Camera2D camera, const Coords3D* blockPos, const Size3D* blockSize);
