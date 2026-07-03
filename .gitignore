@@ -1,10 +1,6 @@
 .cache/
 .direnv/
 build/
-subprojects/**/*
-subprojects/**/.*
-!subprojects/*.wrap
-subprojects/**/.meson-subprojects-wrap-hash.txt
 
 compile_commands.json
 .envrc

@@ -17,9 +17,11 @@ lc = cc.find_library('c', required: true)
 
 dependencies = [lc, raylibdep]
 
+klibfolder = include_directories('subprojects/klib')
+
 executable(
     'irg',
     sources: srcfiles,
-    include_directories: ['./includes'],
+    include_directories: ['./includes', klibfolder],
     dependencies: dependencies,
 )
