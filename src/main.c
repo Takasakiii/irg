@@ -8,8 +8,8 @@
 #include "core.h"
 
 enum {
-    SCREEN_WIDTH = 720,
-    SCREEN_HEIGHT = 480
+    SCREEN_WIDTH = 1080,
+    SCREEN_HEIGHT = 720
 };
 
 
@@ -17,10 +17,10 @@ Camera2D camera;
 const Size3D blockSize = { 64, 32, 40 };
 
 static void renderWorld(const Coords3D* coords, const Block* block) {
-    if(!*block) return;
+    if(block->type == NONE) return;
     const bool isMouseHover = isomentricIsMouseHover(camera, coords, &blockSize);
     const bool isDebugKeyPressed = IsKeyDown(KEY_P);
-    drawIsoCube(coords, &blockSize, isDebugKeyPressed, isMouseHover);
+    drawIsoCube(coords, &blockSize, block, isDebugKeyPressed, isMouseHover);
 }
 
 int main(void) {

@@ -9,7 +9,18 @@ Chunk generateChunk(void) {
     for(int i = 0; i < CHUNK_SIZE_DEPTH; i++) {
         for(int j = 0; j < CHUNK_SIZE; j++) {
             for(int k = 0; k < CHUNK_SIZE; k++) {
-                chunk.blocks[i][j][k] = rand() % 2;
+                const bool existsBlock = rand() % 2;
+                BlockType type;
+
+                if (!existsBlock) {
+                    type = NONE;
+                } else if (i == CHUNK_SIZE_DEPTH - 1) {
+                    type = GLASS;
+                } else {
+                    type = STONE;
+                }
+
+                chunk.blocks[i][j][k].type = type;
             }
         }
     }
@@ -28,4 +39,31 @@ void renderChunk(const Chunk* chunk, const RenderChunkCallback renderCallback) {
             }
         }
     }
+}
+
+BlockColor getBlockColor(const Block* block) {
+    Color topFace;
+    Color body;
+
+    switch (block->type) {
+    case NONE:
+        topFace = (Color) {
+            0, 0, 0, 0
+        };
+        body = topFace;
+        break;
+    case GLASS:
+        body = LIME;
+        topFace = GREEN;
+        break;
+    case STONE:
+        topFace = LIGHTGRAY;
+        body = GRAY;
+        break;
+    }
+
+    return (BlockColor) {
+        topFace,
+        body
+    };
 }

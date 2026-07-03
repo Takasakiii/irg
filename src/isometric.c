@@ -12,10 +12,8 @@ Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize) {
     return screenPos;
 }
 
-void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, bool enableDebug, bool enableLines) {
-    const Color faceTopColor = LIGHTGRAY;
-    const Color otherFacesColor = GRAY;
-    const Color lineColor = BLACK;
+void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block* block,  bool enableDebug, bool enableLines) {
+    const Color selectColor = BLACK;
     const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
 
     const Vector2 top = { isoPos.x, isoPos.y };
@@ -28,22 +26,25 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, bool enableD
     const Vector2 rightB = { right.x, right.y + blockSize->z };
 
     const Vector2 topFace[] = { top, left, bottom, right };
-    DrawTriangleFan(topFace, 4, faceTopColor);
+
+    const BlockColor blockColor = getBlockColor(block);
+
+    DrawTriangleFan(topFace, 4, blockColor.topFace);
     if(enableLines) {
-        DrawLineStrip(topFace, 4, lineColor);
-        DrawLineV(right, top, lineColor);
+        DrawLineStrip(topFace, 4, selectColor);
+        DrawLineV(right, top, selectColor);
     }
 
     const Vector2 leftFace[] = { left, leftB, bottomB, bottom };
-    DrawTriangleFan(leftFace, 4, otherFacesColor);
+    DrawTriangleFan(leftFace, 4, blockColor.body);
     if(enableLines) {
-        DrawLineStrip(leftFace, 4, lineColor);
+        DrawLineStrip(leftFace, 4, selectColor);
     }
 
     const Vector2 rightFace[] = { bottom, bottomB, rightB, right };
-    DrawTriangleFan(rightFace, 4, otherFacesColor);
+    DrawTriangleFan(rightFace, 4, blockColor.body);
     if(enableLines) {
-        DrawLineStrip(rightFace, 4, lineColor);
+        DrawLineStrip(rightFace, 4, selectColor);
     }
 
     if(enableDebug) {
