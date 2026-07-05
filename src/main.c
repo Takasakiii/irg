@@ -1,7 +1,6 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 #include "isometric.h"
 #include "camera.h"
@@ -24,9 +23,9 @@ GameState gameState = {
     CHUNK_SIZE_DEPTH // cameraLayer
 };
 
-static void renderWorld(const Coords3D* coords, const Block* block) {
+static void renderGame(const Coords3D* coords, const Block* block) {
     if(block->type == NONE) return;
-    const bool isMouseHover = isomentricIsMouseHover(*gameState.camera, coords, gameState.blockSize);
+    const bool isMouseHover = isomentricIsMouseHover(&gameState, coords);
     const bool isDebugKeyPressed = IsKeyDown(KEY_P);
     drawIsoCube(coords, gameState.blockSize, block, isDebugKeyPressed, isMouseHover);
 }
@@ -42,18 +41,25 @@ int main(void) {
 
     gameState.camera = &camera;
 
-    const Chunk chunk = generateChunk();
+    World* world = generateWorld(&(Size2D) {
+        3,
+        3
+    });
 
     while (!WindowShouldClose()) {
         handlePlayerCameraControls(&gameState);
         BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode2D(camera);
-                renderChunk(&gameState, &chunk, renderWorld);
+                // renderChunk(&gameState, &chunk, renderWorld);
+                renderWorld(&gameState, world, renderGame);
             EndMode2D();
             drawGui(&gameState);
         EndDrawing();
     }
+
+    destroyWorld(world);
+
     CloseWindow();
     return 0;
 }

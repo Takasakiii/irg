@@ -52,8 +52,11 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block*
     }
 }
 
-bool isomentricIsMouseHover(const Camera2D camera, const Coords3D* blockPos, const Size3D* blockSize) {
-    const Vector2 mouse = GetScreenToWorld2D(GetMousePosition(), camera);
+bool isomentricIsMouseHover(const GameState* gameState, const Coords3D* blockPos) {
+    if(blockPos->z != gameState->cameraLayer - 1) return false;
+
+    const Size3D* blockSize = gameState->blockSize;
+    const Vector2 mouse = GetScreenToWorld2D(GetMousePosition(), *gameState->camera);
     const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
 
     const float isoX = isoPos.x;

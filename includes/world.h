@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <raylib.h>
+#include <khash.h>
 
 #include "core.h"
 
@@ -21,7 +22,8 @@ typedef struct {
 } Block;
 
 typedef struct {
-    Block blocks[CHUNK_SIZE_DEPTH][CHUNK_SIZE][CHUNK_SIZE];
+    Block blocks[CHUNK_SIZE][CHUNK_SIZE_DEPTH][CHUNK_SIZE];
+    Coords2D coords;
 } Chunk;
 
 typedef struct {
@@ -32,8 +34,13 @@ typedef struct {
 typedef void (*RenderChunkCallback)(const Coords3D*, const Block*) ;
 
 
-Chunk generateChunk(void);
-
-void renderChunk(const GameState* gameState, const Chunk* chunk, const RenderChunkCallback renderCallback);
+KHASH_INIT(world, int64_t, Chunk*, true, kh_int64_hash_func, kh_int64_hash_equal)
+typedef khash_t(world) World;
 
 BlockColor getBlockColor(const Block* block);
+
+World* generateWorld(const Size2D* size);
+
+void destroyWorld(World* w);
+
+void renderWorld(const GameState* gameState, const World* w, const RenderChunkCallback renderCallback);

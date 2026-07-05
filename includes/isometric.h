@@ -10,4 +10,4 @@ Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize);
 
 void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block* block,  bool enableDebug, bool enableLines);
 
-bool isomentricIsMouseHover(const Camera2D camera, const Coords3D* blockPos, const Size3D* blockSize);
+bool isomentricIsMouseHover(const GameState* gameState, const Coords3D* blockPos);
