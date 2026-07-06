@@ -38,7 +38,6 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block*
     DrawTriangleFan(rightFace, 4, blockColor.body);
 
     if(enableLines) {
-
         DrawLineStrip(topFace, 4, selectColor);
         DrawLineV(right, top, selectColor);
         DrawLineStrip(leftFace, 4, selectColor);
