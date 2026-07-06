@@ -56,14 +56,14 @@ bool isomentricIsMouseHover(const GameState* gameState, const Coords3D* blockPos
     if(blockPos->z != gameState->cameraLayer - 1) return false;
 
     const Size3D* blockSize = gameState->blockSize;
-    const Vector2 mouse = GetScreenToWorld2D(GetMousePosition(), *gameState->camera);
+    const Vector2* mouse = &gameState->mouseWorldPos;
     const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
 
     const float isoX = isoPos.x;
     const float isoY = isoPos.y;
 
-    const float dx = fabsf(mouse.x - isoX);
-    const float dy = fabsf(mouse.y - (isoY + blockSize->y * 0.5f));
+    const float dx = fabsf(mouse->x - isoX);
+    const float dy = fabsf(mouse->y - (isoY + blockSize->y * 0.5f));
 
     const float hw = blockSize->x * 0.5f;
     const float hh = blockSize->y * 0.5f;

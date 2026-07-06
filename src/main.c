@@ -21,7 +21,8 @@ GameState gameState = {
     &(Size3D) { 64, 32, 40 }, //blockSize
     &(Size2D) {CHUNK_SIZE, CHUNK_SIZE}, // gridSize
     &(Size2D) {9, 9}, // worldSize
-    CHUNK_SIZE_DEPTH // cameraLayer,
+    CHUNK_SIZE_DEPTH, // cameraLayer,
+    {0, 0} // mouseWorldPos
 };
 
 static void renderGame(const Coords3D* coords, const Block* block) {

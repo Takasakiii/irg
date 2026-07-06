@@ -25,6 +25,7 @@ typedef struct {
     Size2D* gridSize;
     Size2D* worldSize;
     int cameraLayer;
+    Vector2 mouseWorldPos;
 } GameState;
 
 Vector2 rotatePoint(Vector2 p, const Vector2* pivot, const float deg);

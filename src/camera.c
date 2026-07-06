@@ -25,4 +25,6 @@ void handlePlayerCameraControls(GameState* gameState) {
     if(IsKeyDown(KEY_A)) camera->target.x -= speed;
     if(IsKeyDown(KEY_W)) camera->target.y -= speed;
     if(IsKeyDown(KEY_S)) camera->target.y += speed;
+
+    gameState->mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), *gameState->camera);
 }
