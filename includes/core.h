@@ -26,11 +26,11 @@ typedef struct {
 
 typedef struct {
     Camera2D* camera;
-    Size2D* screenSize;
-    Size3D* blockSize;
-    IsoBlockMetrics blockMetrics;
-    Size2D* gridSize;
-    Size2D* worldSize;
+    const Size2D* screenSize;
+    const Size3D* blockSize;
+    const IsoBlockMetrics blockMetrics;
+    const Size2D* gridSize;
+    const Size2D* worldSize;
     int cameraLayer;
     Vector2 mouseWorldPos;
 } GameState;

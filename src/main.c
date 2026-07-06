@@ -14,12 +14,15 @@ enum {
     SCREEN_HEIGHT = 720
 };
 
+const Size3D blockSize = {
+    64, 32, 40
+};
 
 GameState gameState = {
     NULL, // camera
     &(Size2D) { SCREEN_WIDTH, SCREEN_HEIGHT }, //screenSize
-    &(Size3D) { 64, 32, 40 }, //blockSize
-    { 64 / 2.0f, 32 / 2.0f, 40.0f }, // blockMetrics
+    &blockSize,
+    { blockSize.x / 2.0f, blockSize.y / 2.0f, (float)blockSize.z }, // blockMetrics
     &(Size2D) {CHUNK_SIZE, CHUNK_SIZE}, // gridSize
     &(Size2D) {9, 9}, // worldSize
     CHUNK_SIZE_DEPTH, // cameraLayer,
