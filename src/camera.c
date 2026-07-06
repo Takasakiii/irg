@@ -12,10 +12,12 @@ Camera2D cameraSetup(const CameraOptions cameraOptions) {
 
 
 void handlePlayerCameraControls(GameState* gameState) {
-    const float velocity = 0.5;
+    const float velocity = 150;
+    const float frameTime = GetFrameTime();
+    const float speed = velocity * frameTime;
     Camera2D* camera = gameState->camera;
-    if(IsKeyDown(KEY_D)) camera->target.x += velocity;
-    if(IsKeyDown(KEY_A)) camera->target.x -= velocity;
-    if(IsKeyDown(KEY_W)) camera->target.y -= velocity;
-    if(IsKeyDown(KEY_S)) camera->target.y += velocity;
+    if(IsKeyDown(KEY_D)) camera->target.x += speed;
+    if(IsKeyDown(KEY_A)) camera->target.x -= speed;
+    if(IsKeyDown(KEY_W)) camera->target.y -= speed;
+    if(IsKeyDown(KEY_S)) camera->target.y += speed;
 }

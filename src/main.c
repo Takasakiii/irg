@@ -42,8 +42,8 @@ int main(void) {
     gameState.camera = &camera;
 
     World* world = generateWorld(&(Size2D) {
-        3,
-        3
+        9,
+        9
     });
 
     while (!WindowShouldClose()) {
