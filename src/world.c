@@ -41,7 +41,12 @@ void renderChunk(const GameState* gameState, const Chunk* chunk, const RenderChu
     const Size2D* chunkSize = gameState->gridSize;
     const Coords2D* chunkCoords = &chunk->coords;
     for(int i = 0; i < gameState->gridSize->y; i++) {
-        for(int j = 0; j < gameState->cameraLayer; j++) {
+        int yMin = gameState->cameraLayer - 3;
+        if(yMin < 0) {
+            yMin = 0;
+        }
+
+        for(int j = yMin; j < gameState->cameraLayer; j++) {
             for(int k = 0; k < gameState->gridSize->x; k++) {
                 const Block* block = &chunk->blocks[i][j][k];
                 const Coords3D coords = { (chunkCoords->x * chunkSize->x) + k, (chunkCoords->y * chunkSize->y) + i, j };
