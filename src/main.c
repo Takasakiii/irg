@@ -20,7 +20,8 @@ GameState gameState = {
     &(Size2D) { SCREEN_WIDTH, SCREEN_HEIGHT }, //screenSize
     &(Size3D) { 64, 32, 40 }, //blockSize
     &(Size2D) {CHUNK_SIZE, CHUNK_SIZE}, // gridSize
-    CHUNK_SIZE_DEPTH // cameraLayer
+    &(Size2D) {9, 9}, // worldSize
+    CHUNK_SIZE_DEPTH // cameraLayer,
 };
 
 static void renderGame(const Coords3D* coords, const Block* block) {
@@ -33,25 +34,17 @@ static void renderGame(const Coords3D* coords, const Block* block) {
 int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "IRG");
 
-    Camera2D camera = cameraSetup((CameraOptions) {
-        gameState.screenSize,
-        gameState.gridSize,
-        gameState.blockSize
-    });
+    Camera2D camera = cameraSetup(&gameState);
 
     gameState.camera = &camera;
 
-    World* world = generateWorld(&(Size2D) {
-        9,
-        9
-    });
+    World* world = generateWorld(gameState.worldSize);
 
     while (!WindowShouldClose()) {
         handlePlayerCameraControls(&gameState);
         BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode2D(camera);
-                // renderChunk(&gameState, &chunk, renderWorld);
                 renderWorld(&gameState, world, renderGame);
             EndMode2D();
             drawGui(&gameState);

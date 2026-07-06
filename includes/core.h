@@ -23,7 +23,7 @@ typedef struct {
     Size2D* screenSize;
     Size3D* blockSize;
     Size2D* gridSize;
-
+    Size2D* worldSize;
     int cameraLayer;
 } GameState;
 

@@ -1,10 +1,15 @@
 #include "camera.h"
 #include "isometric.h"
 
-Camera2D cameraSetup(const CameraOptions cameraOptions) {
+Camera2D cameraSetup(const GameState* gameState) {
+    const float worldSize = gameState->worldSize->x * gameState->gridSize->x;
     return (Camera2D) {
-        (Vector2) { cameraOptions.screenSize->x / 2.0, cameraOptions.screenSize->y / 2.0 }, // offset
-        cartesianToIso(&(Coords3D) { cameraOptions.gridSize->x / 2.0, cameraOptions.gridSize->y / 2.0, 0 }, cameraOptions.blockSize), // target
+        (Vector2) { gameState->screenSize->x / 2.0, gameState->screenSize->y / 2.0 }, // offset
+        cartesianToIso(&(Coords3D) {
+            worldSize / 2.0,
+            worldSize / 2.0,
+            0.0
+        }, gameState->blockSize), // target
         0.0, // rotation
         1.0 // zoom
     };
