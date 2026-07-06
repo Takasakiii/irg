@@ -19,9 +19,16 @@ typedef Coords2D Size2D;
 typedef Coords3D Size3D;
 
 typedef struct {
+    float halfX;
+    float halfY;
+    float z;
+} IsoBlockMetrics;
+
+typedef struct {
     Camera2D* camera;
     Size2D* screenSize;
     Size3D* blockSize;
+    IsoBlockMetrics blockMetrics;
     Size2D* gridSize;
     Size2D* worldSize;
     int cameraLayer;

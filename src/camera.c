@@ -9,7 +9,7 @@ Camera2D cameraSetup(const GameState* gameState) {
             worldSize / 2.0,
             worldSize / 2.0,
             0.0
-        }, gameState->blockSize), // target
+        }, &gameState->blockMetrics), // target
         0.0, // rotation
         1.0 // zoom
     };

@@ -2,28 +2,28 @@
 
 #include <math.h>
 
-Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize) {
+Vector2 cartesianToIso(const Coords3D* catesian, const IsoBlockMetrics* metrics) {
     Vector2 screenPos;
-    screenPos.x = (catesian->x - catesian->y) * (blockSize->x / 2.0);
-    screenPos.y = (catesian->x + catesian->y) * (blockSize->y / 2.0);
+    screenPos.x = (catesian->x - catesian->y) * metrics->halfX;
+    screenPos.y = (catesian->x + catesian->y) * metrics->halfY;
 
-    screenPos.y -= (catesian->z * blockSize->z);
+    screenPos.y -= (catesian->z * metrics->z);
 
     return screenPos;
 }
 
-void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block* block,  bool enableDebug, bool enableLines) {
+void drawIsoCube(const Coords3D* blockPos, const IsoBlockMetrics* metrics, const Block* block,  bool enableDebug, bool enableLines) {
     const Color selectColor = BLACK;
-    const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
+    const Vector2 isoPos = cartesianToIso(blockPos, metrics);
 
     const Vector2 top = { isoPos.x, isoPos.y };
-    const Vector2 right = { isoPos.x + blockSize->x / 2.0, isoPos.y + blockSize->y / 2.0 };
-    const Vector2 bottom = { isoPos.x, isoPos.y + blockSize->y };
-    const Vector2 left = { isoPos.x - blockSize->x / 2.0, isoPos.y + blockSize->y /2.0 };
+    const Vector2 right = { isoPos.x + metrics->halfX, isoPos.y + metrics->halfY };
+    const Vector2 bottom = { isoPos.x, isoPos.y + (metrics->halfY * 2.0f) };
+    const Vector2 left = { isoPos.x - metrics->halfX, isoPos.y + metrics->halfY };
 
-    const Vector2 leftB = { left.x, left.y + blockSize->z };
-    const Vector2 bottomB = { bottom.x, bottom.y + blockSize->z };
-    const Vector2 rightB = { right.x, right.y + blockSize->z };
+    const Vector2 leftB = { left.x, left.y + metrics->z };
+    const Vector2 bottomB = { bottom.x, bottom.y + metrics->z };
+    const Vector2 rightB = { right.x, right.y + metrics->z };
 
     const Vector2 topFace[] = { top, left, bottom, right };
 
@@ -52,18 +52,15 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block*
 bool isomentricIsMouseHover(const GameState* gameState, const Coords3D* blockPos) {
     if(blockPos->z != gameState->cameraLayer - 1) return false;
 
-    const Size3D* blockSize = gameState->blockSize;
+    const IsoBlockMetrics* metrics = &gameState->blockMetrics;
     const Vector2* mouse = &gameState->mouseWorldPos;
-    const Vector2 isoPos = cartesianToIso(blockPos, blockSize);
+    const Vector2 isoPos = cartesianToIso(blockPos, metrics);
 
     const float isoX = isoPos.x;
     const float isoY = isoPos.y;
 
     const float dx = fabsf(mouse->x - isoX);
-    const float dy = fabsf(mouse->y - (isoY + blockSize->y * 0.5f));
+    const float dy = fabsf(mouse->y - (isoY + metrics->halfY));
 
-    const float hw = blockSize->x * 0.5f;
-    const float hh = blockSize->y * 0.5f;
-
-    return (dx / hw + dy / hh) <= 1.0f;
+    return (dx / metrics->halfX + dy / metrics->halfY) <= 1.0f;
 }

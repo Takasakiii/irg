@@ -6,8 +6,8 @@
 #include "core.h"
 #include "world.h"
 
-Vector2 cartesianToIso(const Coords3D* catesian, const Size3D* blockSize);
+Vector2 cartesianToIso(const Coords3D* catesian, const IsoBlockMetrics* metrics);
 
-void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block* block,  bool enableDebug, bool enableLines);
+void drawIsoCube(const Coords3D* blockPos, const IsoBlockMetrics* metrics, const Block* block,  bool enableDebug, bool enableLines);
 
 bool isomentricIsMouseHover(const GameState* gameState, const Coords3D* blockPos);
