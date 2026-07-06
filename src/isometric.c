@@ -30,20 +30,18 @@ void drawIsoCube(const Coords3D* blockPos, const Size3D* blockSize, const Block*
     const BlockColor blockColor = getBlockColor(block);
 
     DrawTriangleFan(topFace, 4, blockColor.topFace);
-    if(enableLines) {
-        DrawLineStrip(topFace, 4, selectColor);
-        DrawLineV(right, top, selectColor);
-    }
 
     const Vector2 leftFace[] = { left, leftB, bottomB, bottom };
     DrawTriangleFan(leftFace, 4, blockColor.body);
-    if(enableLines) {
-        DrawLineStrip(leftFace, 4, selectColor);
-    }
 
     const Vector2 rightFace[] = { bottom, bottomB, rightB, right };
     DrawTriangleFan(rightFace, 4, blockColor.body);
+
     if(enableLines) {
+
+        DrawLineStrip(topFace, 4, selectColor);
+        DrawLineV(right, top, selectColor);
+        DrawLineStrip(leftFace, 4, selectColor);
         DrawLineStrip(rightFace, 4, selectColor);
     }
 
